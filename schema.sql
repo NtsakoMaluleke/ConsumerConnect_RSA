@@ -1,7 +1,3 @@
--- ============================================================
--- ConsumerConnect RSA - Database Schema
--- MySQL 8.0+
--- ============================================================
 
 CREATE DATABASE IF NOT EXISTS consumerconnect_rsa
   CHARACTER SET utf8mb4
@@ -9,9 +5,7 @@ CREATE DATABASE IF NOT EXISTS consumerconnect_rsa
 
 USE consumerconnect_rsa;
 
--- ─────────────────────────────────────────
--- ROLES
--- ─────────────────────────────────────────
+
 CREATE TABLE roles (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   name        VARCHAR(50) NOT NULL UNIQUE,
@@ -26,9 +20,7 @@ INSERT INTO roles (name, description) VALUES
   ('seller',      'Can list and sell products'),
   ('buyer',       'Can browse and purchase products');
 
--- ─────────────────────────────────────────
--- USERS
--- ─────────────────────────────────────────
+
 CREATE TABLE users (
   id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   role_id       INT UNSIGNED NOT NULL DEFAULT 5,
@@ -53,9 +45,7 @@ VALUES (1, 'Super', 'Admin', 'admin@consumerconnect.co.za',
         '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', -- hashed 'Admin@1234'
         'active', NOW());
 
--- ─────────────────────────────────────────
--- CATEGORIES
--- ─────────────────────────────────────────
+
 CREATE TABLE categories (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   parent_id   INT UNSIGNED NULL,
@@ -77,9 +67,7 @@ INSERT INTO categories (name, slug, icon, sort_order) VALUES
   ('Books & Education','books-education',  'book',        7),
   ('Services',         'services',         'briefcase',   8);
 
--- ─────────────────────────────────────────
--- PRODUCTS
--- ─────────────────────────────────────────
+
 CREATE TABLE products (
   id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   seller_id     INT UNSIGNED NOT NULL,
@@ -100,9 +88,7 @@ CREATE TABLE products (
   FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
--- ─────────────────────────────────────────
--- PRODUCT IMAGES
--- ─────────────────────────────────────────
+
 CREATE TABLE product_images (
   id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   product_id INT UNSIGNED NOT NULL,
@@ -112,9 +98,7 @@ CREATE TABLE product_images (
   FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
--- ─────────────────────────────────────────
--- ORDERS
--- ─────────────────────────────────────────
+
 CREATE TABLE orders (
   id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   buyer_id        INT UNSIGNED NOT NULL,
@@ -129,9 +113,7 @@ CREATE TABLE orders (
   FOREIGN KEY (buyer_id) REFERENCES users(id)
 );
 
--- ─────────────────────────────────────────
--- ORDER ITEMS
--- ─────────────────────────────────────────
+
 CREATE TABLE order_items (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   order_id    INT UNSIGNED NOT NULL,
@@ -144,9 +126,7 @@ CREATE TABLE order_items (
   FOREIGN KEY (seller_id)  REFERENCES users(id)
 );
 
--- ─────────────────────────────────────────
--- CART
--- ─────────────────────────────────────────
+
 CREATE TABLE cart (
   id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   user_id    INT UNSIGNED NOT NULL,
@@ -158,9 +138,7 @@ CREATE TABLE cart (
   FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
--- ─────────────────────────────────────────
--- REVIEWS
--- ─────────────────────────────────────────
+
 CREATE TABLE reviews (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   product_id  INT UNSIGNED NOT NULL,
@@ -173,9 +151,7 @@ CREATE TABLE reviews (
   FOREIGN KEY (reviewer_id) REFERENCES users(id)
 );
 
--- ─────────────────────────────────────────
--- MESSAGES (Buyer ↔ Seller)
--- ─────────────────────────────────────────
+
 CREATE TABLE messages (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   sender_id   INT UNSIGNED NOT NULL,
@@ -189,9 +165,7 @@ CREATE TABLE messages (
   FOREIGN KEY (product_id)  REFERENCES products(id) ON DELETE SET NULL
 );
 
--- ─────────────────────────────────────────
--- AUDIT LOG
--- ─────────────────────────────────────────
+
 CREATE TABLE audit_log (
   id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   user_id    INT UNSIGNED,
@@ -204,9 +178,7 @@ CREATE TABLE audit_log (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
--- ─────────────────────────────────────────
--- SETTINGS
--- ─────────────────────────────────────────
+
 CREATE TABLE settings (
   key_name  VARCHAR(100) PRIMARY KEY,
   value     TEXT,
@@ -221,9 +193,7 @@ INSERT INTO settings (key_name, value) VALUES
   ('currency_symbol',    'R'),
   ('support_email',      'support@consumerconnect.co.za');
 
--- ──────────────────────────
--- CONTACT MESSAGES (Support / Contact Us form)
--- ─────────────────────────
+
 CREATE TABLE contact_messages (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   user_id     INT UNSIGNED NULL,
