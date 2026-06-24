@@ -1,14 +1,9 @@
--- ============================================================
--- ConsumerConnect RSA 
--- Run AFTER schema.sql
--- ============================================================
 
 USE consumerconnect_rsa;
 
--- ─────────────────────────────────────────
+
 -- DEMO USERS (password for all: Demo@1234)
--- Hash: $2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi
--- ─────────────────────────────────────────
+
 INSERT INTO users (role_id, first_name, last_name, email, phone, password_hash, province, city, status, verified_at) VALUES
   (2, 'Admin',   'User',     'admin2@consumerconnect.co.za',  '+27110001111', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Gauteng',       'Johannesburg', 'active', NOW()),
   (3, 'Moddie',  'Mokoena',  'mod@consumerconnect.co.za',     '+27110002222', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Western Cape',  'Cape Town',    'active', NOW()),
@@ -19,10 +14,7 @@ INSERT INTO users (role_id, first_name, last_name, email, phone, password_hash, 
   (4, 'Priya',   'Pillay',   'priya@example.co.za',           '+27761234567', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'KwaZulu-Natal', 'Durban',       'active', NOW()),
   (5, 'Zanele',  'Moyo',     'zanele@example.co.za',          '+27771234567', '$2y$12$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Limpopo',       'Polokwane',    'active', NOW());
 
--- ─────────────────────────────────────────
--- PRODUCTS  (seller_id references users above)
--- Sellers: Sipho=3, Thandi=4, Priya=7
--- ─────────────────────────────────────────
+
 INSERT INTO products (seller_id, category_id, title, slug, description, price, stock, condition_type, province, city, status) VALUES
   (3, 1, 'Apple iPhone 14 Pro 256GB Space Black',          'apple-iphone-14-pro-256gb',     'Excellent condition, 9 months old. Includes original box, charger and earphones. No scratches on screen.', 14999.00, 1,  'used',        'KwaZulu-Natal','Durban',       'active'),
   (3, 1, 'MacBook Air M2 8GB 256GB Silver',                'macbook-air-m2-8gb',            'Barely used MacBook Air M2 chip. Battery health 98%. Perfect for students and professionals.',             18500.00, 1,  'used',        'KwaZulu-Natal','Durban',       'active'),
@@ -37,9 +29,7 @@ INSERT INTO products (seller_id, category_id, title, slug, description, price, s
   (3, 7, 'Rich Dad Poor Dad + Think and Grow Rich (2 Books)','rich-dad-think-grow-pack',    'Both books in great condition. Life-changing reads. Selling as a pair. Great for entrepreneurs.',              180.00, 4,  'used',        'KwaZulu-Natal','Durban',       'active'),
   (7, 2, 'Woolworths Puffer Jacket Womens Medium Charcoal', 'woolworths-puffer-jacket-m',   'Worn twice. Very warm. Original Woolworths tag still attached. Perfect for Cape Town winters.',               450.00, 1,  'used',        'KwaZulu-Natal','Durban',       'active');
 
--- ─────────────────────────────────────────
--- PRODUCT IMAGES  (using seed upload filenames)
--- ─────────────────────────────────────────
+
 INSERT INTO product_images (product_id, filename, is_primary, sort_order) VALUES
   (1,  'seed-iphone.jpg',    1, 0),  -- Apple iPhone 14 Pro
   (2,  'seed-macbook.jpg',   1, 0),  -- MacBook Air M2
@@ -54,9 +44,7 @@ INSERT INTO product_images (product_id, filename, is_primary, sort_order) VALUES
   (11, 'seed-book.jpg',      1, 0),  -- Rich Dad Poor Dad + Think and Grow Rich
   (12, 'seed-jacket.jpg',    1, 0);  -- Woolworths Puffer Jacket
 
--- ─────────────────────────────────────────
--- DEMO ORDERS
--- ─────────────────────────────────────────
+
 INSERT INTO orders (buyer_id, total_amount, status, payment_method, payment_ref, shipping_addr) VALUES
   (5, 14999.00, 'delivered', 'eft',        'EFT-20240101-001', '12 Main Road, Cape Town, 8001'),
   (6, 22799.00, 'paid',      'card',       'CARD-20240115-002','45 Jan Smuts Ave, Sandton, 2196'),
@@ -72,9 +60,7 @@ INSERT INTO order_items (order_id, product_id, seller_id, quantity, unit_price) 
   (4, 5,  7, 1,  1400.00),
   (5, 8,  4, 1, 189900.00);
 
--- ─────────────────────────────────────────
--- REVIEWS
--- ─────────────────────────────────────────
+
 INSERT INTO reviews (product_id, reviewer_id, rating, comment) VALUES
   (1, 5, 5, 'Exactly as described! Fast communication, smooth transaction. iPhone is in perfect condition.'),
   (2, 6, 5, 'Great seller, very honest about condition. MacBook works flawlessly.'),
